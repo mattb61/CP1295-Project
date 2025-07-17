@@ -49,9 +49,19 @@ export class Note {
      * @returns {HTMLElement} The created note element
      */
     createElement() {
+        
         // Get the note template
         const template = document.getElementById('note-template');
         const noteElement = document.importNode(template.content, true).querySelector('.note');
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const timeStamp = `${year}-${month}-${day} ${hours}:${minutes}`;
+        let time_Stamp = template.content.getElementById("time_stamp");
+        time_Stamp.textContent = timeStamp;
         
         // Set note properties
         noteElement.id = this.id;
