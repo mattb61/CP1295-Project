@@ -59,7 +59,8 @@ export class Note {
         const day = date.getDate();
         const hours = date.getHours();
         const minutes = date.getMinutes();
-        const timeStamp = `${year}-${month}-${day} ${hours}:${minutes}`;
+        const seconds = date.getSeconds();
+        const timeStamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         let time_Stamp = template.content.getElementById("time_stamp");
         time_Stamp.textContent = timeStamp;
         
@@ -190,6 +191,11 @@ export class NoteManager {
      */
     getAllNotes() {
         return Array.from(this.notes.values());
+    }
+
+    reverseAllNotes() {
+        const reversedArray = Array.from(this.notes.values()).reverse();
+        return reversedArray;
     }
 
     /**

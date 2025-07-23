@@ -34,7 +34,7 @@ export function initializeUI(noteManager) {
     });
 
     notesDescending.addEventListener("click", () => {
-
+        renderDescending(noteManager);
     });
 
     // Setup auto-save timer
@@ -251,8 +251,32 @@ export function renderAscending(noteManager) {
     
     let x = 0;
     let y = 0;
+
     // Render all notes
     noteManager.getAllNotes().forEach(note => {
+        const noteElement = note.createElement();
+        note.x = x;
+        note.y = y;
+        x += 200;
+        setupNoteEventListeners(noteElement, note, noteManager);
+        noteBoard.appendChild(noteElement);
+    });
+}
+
+export function renderDescending(noteManager) {
+    const noteBoard = document.getElementById('note-board');
+    
+    // Clear existing notes
+    const existingNotes = noteBoard.querySelectorAll('.note');
+    existingNotes.forEach(noteElement => {
+        noteElement.remove();
+    });
+    
+    let x = 0;
+    let y = 0;
+
+    // Render all notes
+    noteManager.reverseAllNotes().forEach(note => {
         const noteElement = note.createElement();
         note.x = x;
         note.y = y;
