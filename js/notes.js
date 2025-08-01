@@ -85,7 +85,6 @@ export class Note {
         noteElement.classList.add(this.color);
         noteElement.style.left = `${this.x}px`;
         noteElement.style.top = `${this.y}px`;
-        noteElement.date = `${this.date}`;
         let time_Stamp = template.content.getElementById("time_stamp");
         time_Stamp.textContent = this.date;
 
