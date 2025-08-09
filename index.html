@@ -11,6 +11,8 @@
     <header>
         <h1>QuickNotes</h1>
         <div class="controls">
+            <button id="load-ascending" title="Sort notes in ascending order">Ascending Order</button>
+            <button id="load-descending" title="Sort notes in descending order">Descending Order</button>
             <button id="export-btn" title="Export notes as JSON">Export</button>
             <span class="instructions">Double-click anywhere to add a note</span>
         </div>
@@ -25,12 +27,16 @@
         <div class="note" tabindex="0">
             <div class="note-header">
                 <p id="time_stamp"></p>
-                <input type="file" id="upload-image-btn" hidden></input>
-                <label for="upload-image-btn">🖼️</label>
+                <!-- Alexander helped me fix the upload button and button label not working -->
+                <label>🖼️
+                    <input type="file" class="imageInput" hidden></input>
+                </label>
                 <button class="quote-btn" title="Add inspirational quote">💡</button>
                 <button class="delete-btn" title="Delete note">🗑️</button>
             </div>
-            <div class="note-content" contenteditable="true"></div>
+            <img src="" class="uploaded_image">
+            <div class="note-content" contenteditable="true">
+            </div>
         </div>
     </template>
 

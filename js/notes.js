@@ -18,14 +18,16 @@ export class Note {
      * @param {number} options.x - X position on the board
      * @param {number} options.y - Y position on the board
      * @param {string} options.color - CSS class for note color
+     * @param {string} options.date - time stamp
      */
-    constructor({ id = null, content = '', x = 0, y = 0, color = null }) {
+    constructor({ id = null, content = '', x = 0, y = 0, color = null, date = `` }) {
         this.id = id || this.generateId();
         this.content = content;
         this.x = x;
         this.y = y;
         this.color = color || this.getRandomColor();
         this.element = null;
+        this.date = date || this.generateDate();
     }
 
     /**
@@ -34,6 +36,20 @@ export class Note {
      */
     generateId() {
         return 'note_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+    }
+
+    generateDate() {
+        const template = document.getElementById('note-template');
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        // let time_Stamp = template.content.getElementById("time_stamp");
+        // time_Stamp.textContent = timeStamp;
     }
 
     /**
@@ -53,26 +69,29 @@ export class Note {
         // Get the note template
         const template = document.getElementById('note-template');
         const noteElement = document.importNode(template.content, true).querySelector('.note');
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const timeStamp = `${year}-${month}-${day} ${hours}:${minutes}`;
-        let time_Stamp = template.content.getElementById("time_stamp");
-        time_Stamp.textContent = timeStamp;
+        // const date = new Date();
+        // const year = date.getFullYear();
+        // const month = date.getMonth() + 1;
+        // const day = date.getDate();
+        // const hours = date.getHours();
+        // const minutes = date.getMinutes();
+        // const seconds = date.getSeconds();
+        // const timeStamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        
+        // time_Stamp.textContent = timeStamp;
         
         // Set note properties
         noteElement.id = this.id;
         noteElement.classList.add(this.color);
         noteElement.style.left = `${this.x}px`;
         noteElement.style.top = `${this.y}px`;
-        
+        let time_Stamp = template.content.getElementById("time_stamp");
+        time_Stamp.textContent = this.date;
+
         // Set content
         const contentElement = noteElement.querySelector('.note-content');
         contentElement.textContent = this.content;
-        
+                
         // Store reference to the element
         this.element = noteElement;
         return noteElement;
@@ -127,7 +146,7 @@ export class Note {
     async addRandomQuote() {
         try {
             // Example of fetching from a quote API
-            const response = await fetch('https://api.quotable.io/random?tags=inspirational,success');
+            const response = await fetch('http://api.quotable.io/random?tags=inspirational,success');
             
             if (!response.ok) {
                 throw new Error('Failed to fetch quote');
@@ -190,6 +209,11 @@ export class NoteManager {
      */
     getAllNotes() {
         return Array.from(this.notes.values());
+    }
+
+    reverseAllNotes() {
+        const reversedArray = Array.from(this.notes.values()).reverse();
+        return reversedArray;
     }
 
     /**

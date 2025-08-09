@@ -13,6 +13,8 @@ import { saveNotes, exportNotesAsJson } from './storage.js';
 export function initializeUI(noteManager) {
     const noteBoard = document.getElementById('note-board');
     const exportBtn = document.getElementById('export-btn');
+    const notesAscending = document.getElementById("load-ascending");
+    const notesDescending = document.getElementById("load-descending");
 
     // Double click on board to create a new note
     noteBoard.addEventListener('dblclick', (event) => {
@@ -25,6 +27,14 @@ export function initializeUI(noteManager) {
     // Export button click handler
     exportBtn.addEventListener('click', () => {
         exportNotes(noteManager);
+    });
+
+    notesAscending.addEventListener("click", () => {
+        renderAscending(noteManager);
+    });
+
+    notesDescending.addEventListener("click", () => {
+        renderDescending(noteManager);
     });
 
     // Setup auto-save timer
@@ -82,10 +92,17 @@ export function setupNoteEventListeners(noteElement, note, noteManager) {
     const contentElement = noteElement.querySelector('.note-content');
     const deleteButton = noteElement.querySelector('.delete-btn');
     const quoteButton = noteElement.querySelector('.quote-btn');
+    const uploadButton = noteElement.querySelector('.imageInput');
     
     // Track whether the note is being dragged
     let isDragging = false;
     let dragOffsetX, dragOffsetY;
+    let uploadedImage = noteElement.querySelector(".uploaded_image");
+
+    uploadButton.addEventListener("change", () => {
+        let image = uploadButton.files;
+        uploadedImage.src = URL.createObjectURL(image[0]);
+    });
     
     // Content change handler
     contentElement.addEventListener('input', () => {
@@ -225,6 +242,52 @@ export function renderAllNotes(noteManager) {
     // Render all notes
     noteManager.getAllNotes().forEach(note => {
         const noteElement = note.createElement();
+        setupNoteEventListeners(noteElement, note, noteManager);
+        noteBoard.appendChild(noteElement);
+    });
+}
+
+export function renderAscending(noteManager) {
+    const noteBoard = document.getElementById('note-board');
+    
+    // Clear existing notes
+    const existingNotes = noteBoard.querySelectorAll('.note');
+    existingNotes.forEach(noteElement => {
+        noteElement.remove();
+    });
+    
+    let x = 0;
+    let y = 0;
+
+    // Render all notes
+    noteManager.getAllNotes().forEach(note => {
+        const noteElement = note.createElement();
+        note.x = x;
+        note.y = y;
+        x += 200;
+        setupNoteEventListeners(noteElement, note, noteManager);
+        noteBoard.appendChild(noteElement);
+    });
+}
+
+export function renderDescending(noteManager) {
+    const noteBoard = document.getElementById('note-board');
+    
+    // Clear existing notes
+    const existingNotes = noteBoard.querySelectorAll('.note');
+    existingNotes.forEach(noteElement => {
+        noteElement.remove();
+    });
+    
+    let x = 0;
+    let y = 0;
+
+    // Render all notes
+    noteManager.reverseAllNotes().forEach(note => {
+        const noteElement = note.createElement();
+        note.x = x;
+        note.y = y;
+        x += 200;
         setupNoteEventListeners(noteElement, note, noteManager);
         noteBoard.appendChild(noteElement);
     });

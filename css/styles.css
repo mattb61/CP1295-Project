@@ -57,6 +57,38 @@ header {
     transform: translateY(-2px);
 }
 
+#load-ascending {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#load-descending {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#load-ascending:hover {
+    background-color: #ecf0f1;
+    transform: translateY(-2px);
+}
+
+#load-descending:hover {
+    background-color: #ecf0f1;
+    transform: translateY(-2px);
+}
+
 .instructions {
     font-size: 0.9rem;
     opacity: 0.9;
@@ -85,6 +117,10 @@ header {
     flex-direction: column;
     transition: transform 0.1s ease, box-shadow 0.2s ease;
     overflow: hidden;
+}
+
+#time_stamp {
+    font-size: 14px;
 }
 
 .note:focus, .note:hover {
