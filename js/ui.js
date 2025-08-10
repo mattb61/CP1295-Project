@@ -256,10 +256,10 @@ export function renderAscending(noteManager) {
         noteElement.remove();
     });
     
+    // Help from Alexander Moyles on using the Note Manager to make the sorting functions
     let x = 0;
     let y = 0;
 
-    // Render all notes
     noteManager.getAllNotes().forEach(note => {
         const noteElement = note.createElement();
         note.x = x;
@@ -279,10 +279,10 @@ export function renderDescending(noteManager) {
         noteElement.remove();
     });
     
+    // Help from Alexander Moyles on using the Note Manager to make the sorting functions
     let x = 0;
     let y = 0;
 
-    // Render all notes
     noteManager.reverseAllNotes().forEach(note => {
         const noteElement = note.createElement();
         note.x = x;
